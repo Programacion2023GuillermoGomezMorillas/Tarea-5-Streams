@@ -30,17 +30,6 @@ public class Empleado implements Comparable{
         this.departamento = departamento;
     }
 
-    public static void main(String[] args) {
-        List<Empleado> empleados = new ArrayList<>();
-        empleados.add(new Empleado("Juan", "García", 35000, LocalDate.of(2020, 3, 15), Departamento.INFORMATICA));
-        empleados.add(new Empleado("María", "Martínez", 20000, LocalDate.of(2019, 8, 10), Departamento.CONTABILIDAD));
-        empleados.add(new Empleado("Luis", "López", 28000, LocalDate.of(2022, 1, 20), Departamento.RRHH));
-        empleados.add(new Empleado("Ana", "González", 37000, LocalDate.of(2023, 5, 5), Departamento.INFORMATICA));
-        empleados.add(new Empleado("Carlos", "Rodríguez", 32000, LocalDate.of(2022, 12, 1), Departamento.CONTABILIDAD));
-        empleados.stream()
-                .forEach(persona -> System.out.println(persona.nombre));
-    }
-
 
     public String getNombre() {
         return nombre;
@@ -92,6 +81,32 @@ public class Empleado implements Comparable{
                 ", departamento=" + departamento +
                 '}';
     }
+    public static void main(String[] args) {
+        List<Empleado> empleados = new ArrayList<>();
+        empleados.add(new Empleado("Juan", "García", 35000, LocalDate.of(2020, 3, 15), Departamento.INFORMATICA));
+        empleados.add(new Empleado("María", "Martínez", 20000, LocalDate.of(2019, 8, 10), Departamento.CONTABILIDAD));
+        empleados.add(new Empleado("Luis", "López", 28000, LocalDate.of(2022, 1, 20), Departamento.RRHH));
+        empleados.add(new Empleado("Ana", "González", 37000, LocalDate.of(2023, 5, 5), Departamento.INFORMATICA));
+        empleados.add(new Empleado("Carlos", "Rodríguez", 32000, LocalDate.of(2022, 12, 1), Departamento.CONTABILIDAD));
+        //Ejercicio 2
+        empleados.stream()
+                .filter(persona -> persona.sueldo>30000)
+                .forEach(persona -> System.out.println(persona.nombre));
+        //Ejercicio 3
+        System.out.println("----------------------------------------------------------------");
+        empleados.stream()
+                .filter(empleado ->empleado.getDepartamento()==Departamento.INFORMATICA)
+                .forEach(empleado -> System.out.println(empleado.nombre));
+        //Ejercicio 4
+        System.out.println("----------------------------------------------------------------");
+        empleados.stream()
+                .filter(empleado -> empleado.getDepartamento()==Departamento.CONTABILIDAD)
+                .filter(empleado -> empleado.getSueldo()>30000)
+                .forEach(empleado -> System.out.println(empleado.getNombre()));
+        //Ejercicio 5
+    }
+
+
 
 }
 
