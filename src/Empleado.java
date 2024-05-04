@@ -1,9 +1,8 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class Empleado implements Comparable{
+public class Empleado implements Comparable {
     private String nombre;
     private String apellido;
     private double sueldo;
@@ -81,6 +80,7 @@ public class Empleado implements Comparable{
                 ", departamento=" + departamento +
                 '}';
     }
+
     public static void main(String[] args) {
         List<Empleado> empleados = new ArrayList<>();
         empleados.add(new Empleado("Juan", "García", 35000, LocalDate.of(2020, 3, 15), Departamento.INFORMATICA));
@@ -90,22 +90,74 @@ public class Empleado implements Comparable{
         empleados.add(new Empleado("Carlos", "Rodríguez", 32000, LocalDate.of(2022, 12, 1), Departamento.CONTABILIDAD));
         //Ejercicio 2
         empleados.stream()
-                .filter(persona -> persona.sueldo>30000)
+                .filter(persona -> persona.sueldo > 30000)
                 .forEach(persona -> System.out.println(persona.nombre));
         //Ejercicio 3
         System.out.println("----------------------------------------------------------------");
         empleados.stream()
-                .filter(empleado ->empleado.getDepartamento()==Departamento.INFORMATICA)
+                .filter(empleado -> empleado.getDepartamento() == Departamento.INFORMATICA)
                 .forEach(empleado -> System.out.println(empleado.nombre));
         //Ejercicio 4
         System.out.println("----------------------------------------------------------------");
         empleados.stream()
-                .filter(empleado -> empleado.getDepartamento()==Departamento.CONTABILIDAD)
-                .filter(empleado -> empleado.getSueldo()>30000)
+                .filter(empleado -> empleado.getDepartamento() == Departamento.CONTABILIDAD)
+                .filter(empleado -> empleado.getSueldo() > 30000)
                 .forEach(empleado -> System.out.println(empleado.getNombre()));
         //Ejercicio 5
-    }
+        System.out.println("----------------------------------------------------------------");
+        List<String> listaEmpleados;
+        listaEmpleados = empleados.stream()
+                .filter(empleado -> empleado.getDepartamento() == Departamento.INFORMATICA)
+                .map(empleado -> empleado.getNombre())
+                .collect(Collectors.toList());
+        System.out.println(listaEmpleados);
 
+        //Ejercicio 6
+        System.out.println("----------------------------------------------------------------");
+        String[] lista2 = empleados.stream()
+                .sorted(Comparator.comparing(empleado -> empleado.getSueldo()))
+                .map(empleado -> empleado.getNombre() + " " + empleado.getSueldo())
+                .toArray(String[]::new);
+
+        System.out.println(Arrays.toString(lista2));
+
+        //Ejercicio 7
+        System.out.println("----------------------------------------------------------------");
+        empleados.stream()
+                .sorted(Comparator.comparing(Empleado::getDepartamento)
+                        .thenComparing(Empleado::getApellido))
+                .forEach(empleado -> System.out.println(empleado.getDepartamento() + " " + empleado.getApellido()));
+
+        //Ejercicio 8
+        System.out.println("----------------------------------------------------------------");
+        empleados.stream()
+                .filter(empleado -> empleado.getFechaEntrada().getYear() == 2022)
+                .forEach(empleado -> System.out.println(empleado));
+
+        //Ejercicio 9
+        System.out.println("----------------------------------------------------------------");
+        empleados.stream()
+                .forEach(empleado -> System.out.println(empleado.getNombre() + " " + empleado.getFechaEntrada().getDayOfMonth() + " " + empleado.getFechaEntrada().getMonth().toString() + " " + empleado.getFechaEntrada().getYear()));
+
+        //Ejercicio 10
+        System.out.println("----------------------------------------------------------------");
+
+        Empleado empleadoSueldo = empleados.stream()
+                .max(Comparator.comparing(empleado -> empleado.getSueldo()))
+                .get();
+
+        System.out.println(empleadoSueldo);
+        //Ejercicio 11
+        System.out.println("----------------------------------------------------------------");
+        int cont=0;
+        long empleado11 = empleados.stream()
+                .filter(empleado -> empleado.getDepartamento()==Departamento.INFORMATICA)
+                .count();
+        System.out.printf("Hay %d empleados", empleado11);
+
+
+
+    }
 
 
 }
