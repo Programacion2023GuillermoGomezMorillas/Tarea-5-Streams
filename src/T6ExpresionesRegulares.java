@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 public class T6ExpresionesRegulares {
     public static void main(String[] args) {
 
-
+    /*
         //Ejercicio 1
         String regrex1 = "He ido al cine\\.|He ido al supermercado\\.";
         System.out.println("He ido al supermercado.".matches(regrex1));
@@ -47,6 +47,14 @@ public class T6ExpresionesRegulares {
         //Ejercicio 5
         String regrex5 = "\\w+\\.\\d+";
         System.out.println("abcdge.1234".matches(regrex5));
+*/
+        //Ejercicio 6
+        String regrex6 = "\\d+";
+        Pattern pattern6 = Pattern.compile(regrex6);
+        Matcher matcher6 = pattern6.matcher("abcde.1234jd.6tjuk.000");
+        while(matcher6.find()){
+            System.out.println(matcher6.group());
+        }
 
     }
 
